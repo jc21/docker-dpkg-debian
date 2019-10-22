@@ -1,3 +1,0 @@
-## Allows people in group builder to run all commands
-%builder  ALL=(ALL)       NOPASSWD: ALL
-
