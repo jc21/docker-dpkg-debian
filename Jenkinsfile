@@ -47,8 +47,8 @@ pipeline {
   }
   post {
     success {
-      //build job: 'Docker/docker-dpkg-debian9/golang', wait: false
-      //build job: 'Docker/docker-dpkg-debian9/rust', wait: false
+      build job: 'Docker/docker-dpkg-debian10/golang', wait: false
+      build job: 'Docker/docker-dpkg-debian10/rust', wait: false
       juxtapose event: 'success'
       sh 'figlet "SUCCESS"'
     }
