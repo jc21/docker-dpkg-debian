@@ -1,33 +1,21 @@
-FROM debian:buster
+FROM jc21/dpkg-debian:10
 
 MAINTAINER Jamie Curnow <jc@jc21.com>
 LABEL maintainer="Jamie Curnow <jc@jc21.com>"
 
-# Apt
-RUN apt-get update \
-  && apt-get install -y wget make devscripts build-essential curl automake autoconf expect sudo apt-utils reprepro apt-transport-https jq zip dh-make \
-  && wget https://dpkg.jc21.com/DPKG-GPG-KEY -O /tmp/jc21-dpkg-key \
-  && apt-key add /tmp/jc21-dpkg-key \
-  && echo "deb http://deb.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/buster-backports.list
-  #&& echo "deb https://dpkg.jc21.com/os/debian buster main" > /etc/apt/sources.list.d/jc21.list \
+USER root
 
-RUN apt-get update \
-  && apt-get install -y git \
-  && apt-get -t buster-backports install -y debhelper \
-  && apt-get clean
-
-# Remove requiretty from sudoers main file
-RUN sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers
-
-# Rpm User
-RUN useradd -G sudo builder \
-    && mkdir -p /home/builder \
-    && chmod -R 777 /home/builder
-
-# Sudo
-ADD etc/sudoers.d/builder /etc/sudoers.d/
-RUN chown root:root /etc/sudoers.d/*
+RUN wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13_1.13.1-1_all.deb" -O /tmp/golang-all.deb \
+ && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-src_1.13.1-1_amd64.deb" -O /tmp/golang-src.deb \
+ && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-go_1.13.1-1_amd64.deb" -O /tmp/golang-go.deb \
+ && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-doc_1.13.1-1_all.deb" -O /tmp/golang-doc.deb \
+ && dpkg -i /tmp/golang-all.deb /tmp/golang-src.deb /tmp/golang-go.deb /tmp/golang-doc.deb \
+ && rm -f /tmp/*.deb
 
 USER builder
-WORKDIR /home/builder
+
+# installed in /usr/lib/go-1.13
+ENV GOROOT=/usr/lib/go-1.13
+ENV GOPATH=/home/builder/go
+ENV PATH="/usr/lib/go-1.13/bin:/home/builder/go/bin:${PATH}"
 

@@ -7,20 +7,15 @@ pipeline {
   environment {
     IMAGE      = "dpkg-debian"
     TEMP_IMAGE = "${IMAGE}_${BUILD_NUMBER}"
-    TAG        = "10"
-    TAG2       = "buster"
-    TAG3       = "latest"
+    TAG        = "10-golang"
+    TAG2       = "buster-golang"
+    TAG3       = "latest-golang"
   }
   stages {
-    stage('Prepare') {
-      steps {
-        sh 'docker pull debian:9'
-      }
-    }
     stage('Build') {
       steps {
         ansiColor('xterm') {
-          sh 'docker build --no-cache --squash --compress -t ${TEMP_IMAGE} .'
+          sh 'docker build --pull --no-cache --squash --compress -t ${TEMP_IMAGE} .'
         }
       }
     }
@@ -45,10 +40,12 @@ pipeline {
       }
     }
   }
+  triggers {
+    bitbucketPush()
+  }
   post {
     success {
-      //build job: 'Docker/docker-dpkg-debian9/golang', wait: false
-      //build job: 'Docker/docker-dpkg-debian9/rust', wait: false
+      // build job: 'Docker/docker-dpkg-debian9/golang', wait: false
       juxtapose event: 'success'
       sh 'figlet "SUCCESS"'
     }
@@ -61,3 +58,5 @@ pipeline {
     }
   }
 }
+
+
