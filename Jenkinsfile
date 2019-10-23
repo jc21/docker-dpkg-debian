@@ -12,15 +12,10 @@ pipeline {
     TAG3       = "latest"
   }
   stages {
-    stage('Prepare') {
-      steps {
-        sh 'docker pull debian:9'
-      }
-    }
     stage('Build') {
       steps {
         ansiColor('xterm') {
-          sh 'docker build --no-cache --squash --compress -t ${TEMP_IMAGE} .'
+          sh 'docker build --pull --no-cache --squash --compress -t ${TEMP_IMAGE} .'
         }
       }
     }
