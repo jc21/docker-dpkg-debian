@@ -5,10 +5,10 @@ LABEL maintainer="Jamie Curnow <jc@jc21.com>"
 
 USER root
 
-RUN wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13_1.13.4-1_all.deb" -O /tmp/golang-all.deb \
- && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-src_1.13.4-1_amd64.deb" -O /tmp/golang-src.deb \
- && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-go_1.13.4-1_amd64.deb" -O /tmp/golang-go.deb \
- && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-doc_1.13.4-1_all.deb" -O /tmp/golang-doc.deb \
+RUN wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13_1.13.5-1_all.deb" -O /tmp/golang-all.deb \
+ && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-src_1.13.5-1_amd64.deb" -O /tmp/golang-src.deb \
+ && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-go_1.13.5-1_amd64.deb" -O /tmp/golang-go.deb \
+ && wget "http://ftp.us.debian.org/debian/pool/main/g/golang-1.13/golang-1.13-doc_1.13.5-1_all.deb" -O /tmp/golang-doc.deb \
  && dpkg -i /tmp/golang-all.deb /tmp/golang-src.deb /tmp/golang-go.deb /tmp/golang-doc.deb \
  && rm -f /tmp/*.deb
 
