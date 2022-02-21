@@ -1,4 +1,3 @@
-# Debian 10 Package Build Environment
+# Debian Package Build Environment
 
 TODO
-
