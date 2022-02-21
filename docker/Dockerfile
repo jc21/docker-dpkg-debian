@@ -29,4 +29,7 @@ ADD etc/sudoers.d/builder /etc/sudoers.d/
 RUN chown root:root /etc/sudoers.d/*
 
 USER builder
+ENV USER=builder
+
 WORKDIR /home/builder
+
